@@ -216,3 +216,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- SkyView project ---
+data/*
+!data/.gitkeep
+# outputs/ (manifest, features, figures) is committed — do not ignore
+.kaggle/
+# kagglehub cache lives outside repo (~/.cache/kagglehub/) — never commit
+
+# macOS
+.DS_Store
