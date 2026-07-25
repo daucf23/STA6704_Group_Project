@@ -8,7 +8,7 @@ Raw images (~12,000 JPEGs, hundreds of MB to ~1 GB+) are **too large for GitHub*
 
 | Path | Tracked in git? |
 |------|-----------------|
-| `notebooks/`, `scripts/`, `docs/`, `requirements.txt`, `README.md` | Yes |
+| `notebooks/`, `scripts/`, `src/`, `docs/`, `requirements.txt`, `README.md` | Yes |
 | `outputs/` (manifest, features, figures) | **Yes** — shared EDA & preprocessing artifacts |
 | `data/` (class image folders) | **No** — download locally |
 | `~/Downloads/skyview-*.zip` | **No** — local download cache |
@@ -104,6 +104,18 @@ full_path = DATA_DIR / row["relative_path"]
 ```
 
 For modeling, filter by `split` (`train` / `val` / `test`). Load the fitted scaler with `joblib.load("outputs/features/scaler.joblib")`. Exact MD5 duplicates are already removed from the manifest; see `outputs/duplicates.csv` for the 3 dropped Airport copies.
+
+## Modeling notebooks (shared splits)
+
+**All modeling notebooks must use the EDA stratified 80/10/10 splits** from `outputs/manifest.csv` (`random_state=42`, ~9,597 / 1,200 / 1,200). Do **not** re-split with `random_split`, sklearn `train_test_split`, or a private 70/15/15 scheme — that breaks cross-model comparison and can reintroduce images EDA dropped.
+
+Shared helpers live in [`src/data_splits.py`](src/data_splits.py) (`load_manifest`, `split_frames`, `paths_and_labels`, `resolve_image_path`).
+
+| Notebook | Model(s) | Split source |
+|----------|----------|--------------|
+| [`cnn_training.ipynb`](cnn_training.ipynb) | Custom CNN / ResNet18 / ResNet50 | Manifest via `src/data_splits.py` |
+| [`tree_based_methods_skyview.ipynb`](tree_based_methods_skyview.ipynb) | Dummy, tree, bagging, RF, ExtraTrees, HistGB | Same manifest splits |
+| [`pca-svm.ipynb`](pca-svm.ipynb) | PCA + SVM on tabular features | `image_features.csv` `split` column (asserted to match manifest) |
 
 ## Class labels (15 categories)
 
