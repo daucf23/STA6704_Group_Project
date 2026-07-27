@@ -116,6 +116,7 @@ Shared helpers live in [`src/data_splits.py`](src/data_splits.py) (`load_manifes
 | [`cnn_training.ipynb`](cnn_training.ipynb) | Custom CNN / ResNet18 / ResNet50 | Manifest via `src/data_splits.py` |
 | [`tree_based_methods_skyview.ipynb`](tree_based_methods_skyview.ipynb) | Dummy, tree, bagging, RF, ExtraTrees, HistGB | Same manifest splits |
 | [`pca-svm.ipynb`](pca-svm.ipynb) | PCA + SVM on tabular features | `image_features.csv` `split` column (asserted to match manifest) |
+| [`ridge_lasso_regression.ipynb`](ridge_lasso_regression.ipynb) | Ridge / Lasso on ontology targets | Feature/target CSVs asserted to match manifest; α tuned on val, scored on test |
 
 ## Class labels (15 categories)
 
